@@ -17,6 +17,7 @@
             constructor(props) {
                 super(props)
                 this.handleClick = this.handleClick.bind(this)
+                this.inputSomthing = this.inputSomthing.bind(this)
                 //this func do net need to bind this, as it use event
                 // this.handleBlur = this.handleBlur.bind(this)
             }
@@ -27,6 +28,7 @@
                     //this div is required
                     <div>
                     <input type="text" ref={input => this.msgInput = input} /> &nbsp;&nbsp;&nbsp;
+                    <input type="text" ref="content" onBlur={this.inputSomthing} />
                     <button onClick={this.handleClick}>ClickMe</button> &nbsp;&nbsp;&nbsp;
                     <input type="text" onBlur={this.handleBlur} placeholder="input something and move out..." />
                     </div>
@@ -37,7 +39,12 @@
             handleClick() {
                 alert(this.msgInput.value)
             }
-
+            
+            //this way is not recommended
+            inputSomthing() {
+                let input = this.refs.content
+                alert(input.value)
+            }
             //onblur func
             handleBlur(event) {
                 //use event instead of this
