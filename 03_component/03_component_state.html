@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>React-Component</title>
+        <script src="../statics/js/react.development.js"></script>
+        <script src="../statics/js/react-dom.development.js"></script>
+        <script src="../statics/js/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="demo_01"></div>
+        <div id="demo_02"></div>
+        <div id="demo_03"></div>
+
+        <script type="text/babel">
+        //需求：做一个灯的开关，默认显示 "灯灭了...", 当点击文字时显示 "灯亮了!!!"
+        //再点时显示 "灯灭了..."
+
+        class MyComponent extends React.Component {
+            //it's similar to python's __init__(), so super() is clear
+            constructor(props) {
+                super(props)
+                //init state
+                this.state = {
+                    lightState: false
+                }
+                //给自定义方法绑定this, 由于bind返回的是一个绑定后的方法，所以需要使用原方法去接收
+                this.handleClick = this.handleClick.bind(this)
+            }
+
+            //render func
+            render() {
+                // if (this.state.lightState) {
+                //     return <h1 onClick={this.handleClick}>灯亮了！！！</h1>
+                // }else {
+                //     return <h1 onClick={this.handleClick}>灯灭了...</h1>
+                // }
+
+                let msg = this.state.lightState?"灯亮了！！！":"灯灭了..."
+                return <h1 onClick={this.handleClick}>{msg}</h1>
+            }
+
+            //click handler
+            handleClick() {
+                //Can't update state in this way, it doesn't work. Must use this.setState()
+                // this.state.lightState = !this.state.lightState
+                this.setState({
+                    lightState: !this.state.lightState
+                })
+            }
+        }
+        
+        //render virtualDom to RealDOM Container
+        ReactDOM.render(<MyComponent/>, document.getElementById("demo_01"))
+        </script>
+        
+    </body>
+</html>

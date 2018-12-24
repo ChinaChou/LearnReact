@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title>JSX</title>
+        <meta charset="utf-8">
+        <script type="text/javascript" src="../statics/js/react.development.js"></script>
+        <script type="text/javascript" src="../statics/js/react-dom.development.js"></script>
+        <script type="text/javascript" src="../statics/js/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="demo-01"></div>
+        <div id="demo-02"></div>
+        <div id="demo-03"></div>
+
+        <script type="text/babel">
+            //创建虚拟DOM
+            //注意，这个vDom并不是一个字符串
+            var vDom_01 = <h1>Hello World</h1>
+
+            //渲染vDom到真实的Dom中
+            ReactDOM.render(vDom_01, document.getElementById("demo-01"))
+        </script>
+
+        
+        <script type="text/javascript">
+        //这种写法在react中不常用，通常使用JSX语法来创建虚拟DOM
+            //创建虚拟DOM
+            var vDom_02 = React.createElement("h2", {id:"demo-02"}, "Hello world in demo-02 div")
+
+            //渲染
+            ReactDOM.render(vDom_02, document.getElementById("demo-02"))
+        </script>
+
+
+        <script type="text/babel">
+        //显示列表内容
+            //创建初始数据
+            var data = ["javascript", "python", "golang", "java", "c", "c++"]
+
+            //创建虚拟DOM
+            //在react中想要在JSX中显示动态的变量，可以使用{}，这有点类似模板语法；
+            //当JSX中需要分开写多行的时候，可以使用()来将代码括起来；
+            var vDom_03 = (
+                <ul>
+                    {
+                        data.map((name, idx) => <li key={idx}>{name}</li>) //react中要求给每个li都设置一个唯一的key，不然会在console中显示警告信息
+                    }
+                </ul>
+            )
+            
+            //渲染虚拟DOM
+            ReactDOM.render(vDom_03, document.getElementById("demo-03"))
+        </script>
+    </body>
+</html>

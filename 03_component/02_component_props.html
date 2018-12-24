@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>React-Component</title>
+        <script src="../statics/js/react.development.js"></script>
+        <script src="../statics/js/react-dom.development.js"></script>
+        <script src="../statics/js/prop-types.js"></script>
+        <script src="../statics/js/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="demo_01"></div>
+        <div id="demo_02"></div>
+        <div id="demo_03"></div>
+
+        <script type="text/babel">
+        //在React中组件有三大特性
+        // 1、props
+        // 2、state
+        // 3、refs
+
+        //创建一个person对象，老的语法，是一个全局变量
+        var person_01 = {name:"Rose", age: 22, gender: "female"}
+
+        //ES6语法，用于定义局部变量
+        let person_02 = {name:"Jack", age: "24", gender: "male"}
+
+        //创建一个Component类
+        class MyComponent extends React.Component {
+            //组件的渲染方法
+            render() {
+                return (
+                    <ul>
+                        <li>{this.props.name}</li>
+                        <li>{this.props.age}</li>
+                        <li>{this.props.gender}</li>
+                        <li>{this.props.country}</li>
+                    </ul>
+                )
+            }
+        }
+
+        //对组件的props进行检查：类型和必要性
+        //当类型不对时，会在console报错的。
+        MyComponent.propTypes = {
+            name: PropTypes.string.isRequired,
+            age: PropTypes.number.isRequired,
+            gender: PropTypes.string.isRequired
+        }
+        
+        //设置props的默认值
+        MyComponent.defaultProps = {
+            country: "US"
+        }
+
+        //渲染组件
+        ReactDOM.render(<MyComponent name={person_01.name} age={person_01.age} gender={person_01.gender}/>, 
+                        document.getElementById("demo_01"))
+        
+        //这种方式更简单， {...var} 相当于解包，和golang中的语法有点像
+        ReactDOM.render(<MyComponent {...person_02}/>, document.getElementById("demo_02"))
+        
+        </script>
+    </body>
+</html>

@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>React-Component</title>
+        <script src="../statics/js/react.development.js"></script>
+        <script src="../statics/js/react-dom.development.js"></script>
+        <script src="../statics/js/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="demo-01"></div>
+        <div id="demo-02"></div>
+        <div id="demo-03"></div>
+        
+        
+        <script type="text/babel">
+        /*
+          在React中创建组件有两种方式：
+            1、使用工厂函数；
+            2、使用ES6的类，继承自React.Component;
+        */
+        //方法一：使用工厂函数：
+        //创建组件：
+        function MyComponent_01() {
+            return (
+                <h1>Hello world</h1>
+            )
+        }
+
+        //渲染组件：
+        ReactDOM.render(<MyComponent_01 />, document.getElementById("demo-01"))
+        </script>
+    </body>
+</html>
