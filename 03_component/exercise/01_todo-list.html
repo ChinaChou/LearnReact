@@ -1,0 +1,117 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>TodoList</title>
+        <script src="../../statics/js/react.development.js"></script>
+        <script src="../../statics/js/react-dom.development.js"></script>
+        <script src="../../statics/js/prop-types.js"></script>
+        <script src="../../statics/js/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="app"></div>
+
+        <script type="text/babel">
+        //TodoList project consists of one main-component(TodoList) and two subcomponents(AddTodo, ShowTodos)
+        
+        //main component
+        class TodoList extends React.Component {
+            //generate default todos
+            constructor(props) {
+                super(props)
+                // todolist data should save into main component, and it may be modified indirectly by subcomponent
+                this.state = {
+                    todos: ["Learn English", "Learn Math", "Learn Music"]
+                }
+                this.addTodo = this.addTodo.bind(this)
+            }
+
+            //render func
+            //We can't modify main component's state directly in subcomponent, so a main component's function must be
+            //      passed to subcomponent via subcomponent's props
+            render() {
+                let todoCount = this.state.todos.length + 1
+                return (
+                    <div>
+                        <h1>TodoList Project {new Date().toLocaleTimeString()}</h1>
+                        <AddTodo add={this.addTodo} todoCount={todoCount}/>
+                        <ShowTodos todos={this.state.todos}/>
+                    </div>
+                )
+            }
+            
+            //add todo to this.state.todos
+            addTodo(todo) {
+                let allTodos = this.state.todos
+                allTodos.unshift(todo)
+                //modify state and this will lead to render() be called
+                this.setState(
+                    {
+                        todos: allTodos
+                    }
+                )
+            }
+        }
+
+
+        //add todo component
+        class AddTodo extends React.Component {
+            constructor(props) {
+                super(props)
+                this.addOneTodo = this.addOneTodo.bind(this)
+            }
+
+            render() {
+                return (
+                    <div>
+                        <input type="text" ref={input => this.todoInput = input} placeholder="what do you want to do?" />
+                        <button onClick={this.addOneTodo}>Add #{this.props.todoCount}</button>
+                    </div>
+                )
+            }
+
+            addOneTodo() {
+                //trim value
+                let todo = this.todoInput.value.trim()
+                // if input value is empty, do not add
+                if (!todo) {
+                    this.todoInput.value = ""
+                    return
+                }
+
+                //add this todo to main component's this.state.todos
+                this.props.add(todo)
+                //clear input 
+                this.todoInput.value = ""
+            }
+        }
+        
+        //props type and required check
+        AddTodo.propTypes = {
+            add: PropTypes.func.isRequired,
+            todoCount: PropTypes.number.isRequired
+        }
+
+
+        //show todos component
+        class ShowTodos extends React.Component {
+            
+            render() {
+                let todos = this.props.todos
+                return (
+                    <ul>
+                        {todos.map((v,k) => <li key={k}>{v}</li>)}
+                    </ul>
+                )
+            }
+        }
+        // ShowTodos component props type and require check
+        ShowTodos.propTypes = {
+            todos: PropTypes.array.isRequired
+        }
+
+        //Render VirtualDOM
+        ReactDOM.render(<TodoList />, document.getElementById("app"))
+
+        </script>
+    </body>
+</html>
