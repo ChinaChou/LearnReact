@@ -1,11 +1,15 @@
 import React from 'react'
-import {render} from 'react-dom'
-import {BrowserRouter} from 'react-router-dom'
+import ReactDOM from 'react-dom'
+
 
 import App from './components/app/app'
+import store from './redux/store'
 
-render((
-    <BrowserRouter>
-        <App/>
-    </BrowserRouter>
-), document.getElementById("root"))
+function render() {
+    ReactDOM.render(<App store={store}/>, document.getElementById("root"))
+}
+
+ReactDOM.render(<App store={store}/>, document.getElementById("root"))
+
+//监听state变化，然后重新渲染UI
+store.subscribe(render)
