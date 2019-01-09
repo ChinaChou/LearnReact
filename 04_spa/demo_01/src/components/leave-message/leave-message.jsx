@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
-
-import {LeaveMessageCreator} from '../../redux/actions'
-import store from '../../redux/store'
+import PropTypes from 'prop-types'
 
 class LeaveMessage extends Component {
+    static propTypes = {
+        LeaveMessageCreator: PropTypes.func.isRequired
+    }
+
     render() {
         return (
             <div>
@@ -34,7 +36,7 @@ class LeaveMessage extends Component {
         if (username === "" || content === "") {
             return
         }
-        store.dispatch(LeaveMessageCreator({username, content}))
+        this.props.LeaveMessageCreator({username, content})
         this.usernameInput.value = ""
         this.messageInput.value = ""
     }

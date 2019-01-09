@@ -1,9 +1,13 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
-import {DeleteMessageCreator, DoZanCreator} from '../../redux/actions'
-import store from '../../redux/store'
 
 class ShowMessage extends Component {
+    static propTypes = {
+        DeleteMessageCreator: PropTypes.func.isRequired,
+        DoZanCreator: PropTypes.func.isRequired
+    }
+    
     render() {
         return (
             <div className="row">
@@ -35,13 +39,13 @@ class ShowMessage extends Component {
     deleteMessage = () => {
         let {id} = this.props
         if (window.confirm(`确认删除${this.props.message.username}的留言吗？`)) {
-            store.dispatch(DeleteMessageCreator(id))
+            this.props.DeleteMessageCreator(id)
         }
 
     }
     doZan = () => {
         let {id} = this.props
-        store.dispatch(DoZanCreator(id))
+        this.props.DoZanCreator(id)
     }
 }
 

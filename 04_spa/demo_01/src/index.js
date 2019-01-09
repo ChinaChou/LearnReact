@@ -1,15 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import {Provider} from 'react-redux'
 
 
-import App from './components/app/app'
+import App from './containers/app'
 import store from './redux/store'
 
-function render() {
-    ReactDOM.render(<App store={store}/>, document.getElementById("root"))
-}
-
-ReactDOM.render(<App store={store}/>, document.getElementById("root"))
-
-//监听state变化，然后重新渲染UI
-store.subscribe(render)
+ReactDOM.render((
+    <Provider store={store}>
+        <App/>
+    </Provider>
+), document.getElementById("root"))
